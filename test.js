@@ -1,90 +1,77 @@
-const main = document.getElementById('main');
-const shape = document.getElementById('shape');
-const shapeRect = shape.getBoundingClientRect();
-console.log(shapeRect); //デバッグ用
-const halfWidth = shapeRect.width /1.35;
-const arrow1 = document.getElementById("arrow1");
-const context = arrow1.getContext('2d');
-
-context.beginPath();
-context.fillStyle = 'blue';
-context.moveTo(halfWidth,0);//ペンを離した状態で移動：moveTo
-context.lineTo(halfWidth,50);//ペンを付けた状態で移動：lineTo
-context.lineTo(halfWidth + 5 , 45);
-context.moveTo(halfWidth,50);
-context.lineTo(halfWidth - 5 , 45);
-context.stroke();
-
-
-const input = document.querySelector('input');
-
-
 window.onload = () => {
     input.focus();
 }
+const flowChartArea = document.getElementById('flowChartArea');
+const confirmation = document.getElementById('confirmation');
+const allCanvas = document.querySelectorAll('canvas');
+const firstBox = document.getElementsByClassName('itemBox')[0];
+const firstArrow = document.getElementsByClassName('firstArrow')[0];
+const temporaly = document.getElementById('temporaly');
+const input = document.querySelector('textarea');
 
-window.addEventListener('keydown',changeShape);
+const firstRect = firstBox.getBoundingClientRect();
+const baseWidth = firstRect.width;
+const baseHeight = firstRect.height;
+const halfWidth = baseWidth / 2;
 
-let count = 0;
+//divタグの幅の調整
+const eAreaLength = document.getElementsByClassName('eArea').length;
 
-
-function changeShape(e){
-    if(e.key === 'ArrowRight'){
-        count++;
-        switch(count){
-            case 1:
-                green();
-                break;
-            case 2:
-                red()
-                break;
-            case 3:
-                purple()
-                break;
-        }
-    }else { 
-        input.addEventListener('keydown',pressEnter)
+for(let i = 0; i < eAreaLength; i++){
+    i % 2 !== 0 ? resizeAreaWidth(baseWidth) : resizeAreaWidth(halfWidth);
+    function resizeAreaWidth(innerWidth){
+        const eArea = document.getElementsByClassName('eArea')[i];
+        eArea.style.width = innerWidth + 'px';
     }
 }
 
+//canvasの高さの調整（1行目）
+const area0 = document.getElementsByClassName('eArea')[0];
+const area0Canvas = area0.querySelectorAll('canvas');
+const area1 = document.getElementsByClassName('eArea')[1];
+const area1Div = area1.getElementsByClassName('itemBox');
+const area1Canvas = area1.querySelectorAll('canvas');
 
-function green() {
-    shape.removeAttribute('class','beginEnd around0 itemBox');
-    shape.setAttribute('class','process around1 itemBox1');
-}
-function red() {
-    shape.removeAttribute('class','process around1 itemBox1');
-    shape.setAttribute('class','hishigata around2 itemBox2');
-}
-function purple() {
-    shape.removeAttribute('class','hishigata around2 itemBox2');
-    shape.setAttribute('class','beginEnd around0 itemBox');
-    count = 0;
-}
-
-function pressEnter(e){
-    if(e.key === 'Enter' && input.value !== ''){
-        input.replaceWith(input.value);//inputnお中身をdivエリアに書き込む
-        const nextDiv = document.createElement('div');//挿入する子要素を用意
-        nextDiv.className = 'beginEnd around0 itemBox';//子要素のクラスを追加
-        main.appendChild(nextDiv);//作った次の要素を子要素に追加
-        document.getElementsByClassName('beginEnd around0 itemBox')[1].insertAdjacentElement('beforeend',input);
-        //造られた子要素にinputタグを挿入
-        input.value = '';//inputの値を初期化
-        input.focus();//inputにカーソルを合わせる
-
-        const nextBox = document.createElement('canvas');//canvasタグを作成
-        main.appendChild(nextBox);//canvasタグを子要素に追加
-        nextBox.className = 'arrow1';//クラスに関連付けて高さを調節
-        //canvasライン
-        const nextContext = nextBox.getContext('2d');
-        nextContext.beginPath();
-        nextContext.fillStyle = '#000';
-        nextContext.moveTo(157,0);
-        nextContext.lineTo(157,150);
-        nextContext.lineTo(157 + 5 , 140);
-        nextContext.moveTo(157,150);
-        nextContext.lineTo(157 - 5 , 140);
-        nextContext.stroke();
+for(let n = 0; n < area0Canvas.length; n++){
+    n % 2 === 0 ? evenHeight() : oddHeight();
+    function evenHeight(){
+        area0Canvas[n].setAttribute('width','100%');
+        area0Canvas[n].setAttribute('height', area1Div[n].getBoundingClientRect().height + 'px');
+        input.addEventListener('input',()=>{
+            area0Canvas[n].setAttribute('height', area1Div[n].getBoundingClientRect().height + 'px');
+        });
     }
-} 
+    function oddHeight(){
+        area0.querySelectorAll('canvas')[n].setAttribute('width','100%');
+        area0.querySelectorAll('canvas')[n].setAttribute('height','50px');
+    }
+}
+//canvasの高さの調整（2行目）
+for(let n = 0; n < area1Canvas.length; n++){
+    area1Canvas[n].setAttribute('width','200px');
+    area1Canvas[n].setAttribute('height','50px');
+}
+
+
+// 矢印の型を用意
+const firstContext = firstArrow.getContext('2d');
+
+firstContext.beginPath();
+firstContext.fillStyle = '#000';
+firstContext.moveTo(halfWidth,0);
+firstContext.lineTo(halfWidth,50);
+firstContext.lineTo(halfWidth + 5 , 45);
+firstContext.moveTo(halfWidth,50);
+firstContext.lineTo(halfWidth - 5 , 45);
+firstContext.stroke();
+
+//文字列に合わせてインプットタグの幅を調整
+input.addEventListener('input',inputExtender);
+const span = document.getElementById('temporaly');
+function inputExtender(){
+    span.textContent = input.value;
+    const spanWidth = span.getBoundingClientRect().width;
+    const spanHeight = span.getBoundingClientRect().height*1.1;
+    input.style.width = spanWidth + 'px';
+    input.style.height = spanHeight + 'px';
+}
