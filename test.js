@@ -52,7 +52,6 @@ for(let n = 0; n < area1Canvas.length; n++){
     area1Canvas[n].setAttribute('height','50px');
 }
 
-
 // 矢印の型を用意
 const firstContext = firstArrow.getContext('2d');
 
