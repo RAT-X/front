@@ -16,9 +16,14 @@
 
 /* フローチャート内共通アイテム */
 .area {
-    width: var(--set-width);
     display: flex;
     flex-direction: column;
+}
+.evenArea {
+    width: calc(var(--set-width)/2);
+}
+.oddArea {
+    width: var(--set-width);
 }
 .empty {
     width: var(--ser-width);
