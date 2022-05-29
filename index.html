@@ -9,22 +9,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <section id="flowchartArea">
-        <div class="eArea">
-            <canvas class="sideArrow"></canvas>
-            <canvas class="sideArrow"></canvas>
+    <!-- フローチャートエリア -->
+    <section id="flowChartArea">
+        
+        <!-- 一行目の初期値 -->
+        <div class="area">
+            <canvas class="arrow"></canvas>
+            <canvas class="arrow"></canvas>
         </div>
-        <div class="eArea">
-            <div class="beginEnd itemBox strongBE ishere">
-                <textarea name="" id="" cols="30" rows="10"></textarea>
-            </div>
-            <canvas class="arrows arrowType0 firstArrow"></canvas>
+
+        <!-- 二行目の初期値 -->
+        <div class="area">
+            <div class="empty"></div>
+            <canvas class="arrow"></canvas>
         </div>
     </section>
+
+    <!-- 確認エリア -->
     <section id="confirmationArea">
-        <script src="./sideItem.js"></script>
     </section>
+
+    <!-- 横幅調整用のspan -->
     <span id="temporaly"></span>
+
+    <!-- 読み込み用スクリプト -->
+    <script src="./sideItem.js"></script>
     <script src="./test.js"></script>
 </body>
 </html>
