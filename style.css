@@ -30,7 +30,7 @@
     height: 50px;
 }
 .itemBox {
-    min-height: 20px;
+    min-height: 50px;
     text-align: center;
     font-size: 15px;
     width: var(--set-width);
@@ -38,6 +38,12 @@
     padding: 10px;
     box-sizing:border-box;
     overflow-wrap: break-word;
+}
+
+/* startEmd */
+.startEnd {
+    background: rgb(109, 225, 109);
+    border-radius: 30px;
 }
 
 textarea {
