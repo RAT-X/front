@@ -22,7 +22,8 @@ firstItemBox.className = 'itemBox startEnd strongBE';
 
 //最初の矢印の設定
 const firstBoxUnderCanvas = allArea[1].querySelectorAll('.arrow')[0];
-const halfWidth = 150;
+const firstAllWidth = firstBoxUnderCanvas.getBoundingClientRect().width;
+const halfWidth = firstAllWidth/1.35;
 const firstContext = firstBoxUnderCanvas.getContext('2d');
 firstContext.beginPath();
 firstContext.fillStyle = 'blue';
