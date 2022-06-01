@@ -3,6 +3,7 @@
 :root {
     --set-width: 200px;
     --set-border-width: 3px;
+    --set-height: 30px;
 }
 #flowChartArea{
     display: flex;
@@ -27,20 +28,31 @@
 }
 .empty {
     width: var(--ser-width);
-    height: 50px;
+    min-height: var(--set-height);
 }
 .itemBox {
-    min-height: 50px;
+    min-height: var(--set-height);
     text-align: center;
     font-size: 15px;
     width: var(--set-width);
     margin: 0;
-    padding: 10px;
+    padding: 0px;
     box-sizing:border-box;
     overflow-wrap: break-word;
 }
+#temporaly {
+    display: inline-block;
+    width: 150px;
+    min-height: 30px;
+    font-size: 15px;
+    overflow-wrap: break-word;
+    opacity: 0;
+}
+textarea {
+    resize: none;
+}
 
-/* startEmd */
+/* startEnd */
 .startEnd {
     background: rgb(109, 225, 109);
     border-radius: 30px;
