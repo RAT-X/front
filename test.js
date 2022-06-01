@@ -1,6 +1,8 @@
 const allArea = document.querySelectorAll('.area');
 const input = document.createElement('textarea');
+const isHere = document.getElementsByClassName('isHere');
 
+/* スタイル整備 */
 // Area0のボックス初期値の成形
 const area0Arrows = allArea[0].getElementsByClassName('arrow');
 const area1Arrows = allArea[1].getElementsByClassName('arrow');
@@ -8,44 +10,56 @@ const areaChildren = allArea[1].children;
 const area1Elements = allArea[1].children;
 
 for(let i = 0; i < area1Arrows.length; i++){
-    area1Arrows[i].style.height = "50px";
+    area1Arrows[i].style.height = area0Arrows[i].getBoundingClientRect().height + 'px';
 }
 
 for(let i=0; i< area0Arrows.length; i++){
     if(i % 2 === 0){
-        area0Arrows[i].style.height = areaChildren[i].getBoundingClientRect().height + 'px';
+        area0Arrows[i].style.height = areaChildren[i].getBoundingClientRect().height + 6 + 'px';
     }
 }
 
 //Area0のElement幅の伸長
-input.addEventListener('input',canvasExtender);
-function canvasExtender(){
-    for(let i = 0; i < area0Arrows.length-1; i++){
+input.addEventListener('input',area0CanvasExtender);
+function area0CanvasExtender(){
+    for(let i = 0; i < area0Arrows.length; i++){
         if(i%2===0){
             area0Arrows[i].style.height = areaChildren[i].getBoundingClientRect().height + 'px';
         }
     }
 }
 
-for(let i=0; i<area0Arrows.length-1; i++){
-    i%2 === 0 ? area0EvenCanvases() : area0OddCanvases();
-
-    function area0EvenCanvases(){
-        const arrow0Even = area0Arrows[i];
-        const arrow1Elements = area1Elements[i];
-        const wantHeight = arrow1Elements.getBoundingClientRect().height + 'px';
-        arrow0Even.style.height = wantHeight;
+//Area1以降のElement<幅>の設定
+for(let i = 2; i < allArea.length; i++){
+    if(i % 2 === 0){
+        const thisArrows = allArea[i].getElementsByClassName('arrow');
+        const previousDivs = allArea[i-1].children;
+        for(let n = 0; n < thisArrows.length; n++){
+            thisArrows[n].style.height = previousDivs[n].getBoundingClientRect().height + 6 + 'px';
+        }
     }
-
-    function area0OddCanvases(){
-        const arrow0Odd = area0Arrows[i];
-        const arrow1Elements = area1Elements[i];
-        const wantHeight = arrow1Elements.getBoundingClientRect().height + 'px';
-        arrow0Odd.style.height = wantHeight;
-    }
-
 }
 
+//Area1以降のElement<幅の伸長>
+input.addEventListener('input',afterCanvasExtender);
+function afterCanvasExtender(){
+    for(let i = 1; i < allArea.length; i++){
+        if(i % 2 === 0){
+            input.addEventListener('input',evenArea);
+        }
+        function evenArea(){
+            const areaXAllChildren = allArea[i].children;
+            const areaPXAllChildren = allArea[i-1].children;
+            for(let n = 0; n < areaXAllChildren.length; n++){
+                if(n % 2 === 0){
+                    areaXAllChildren[n].style.height = areaPXAllChildren[n].getBoundingClientRect().height + 'px';
+                }
+            }
+        }
+    }
+}
+
+/* */
 
 //最初のボックス設定
 const firstItemBox = allArea[1].querySelectorAll('.empty')[0];
@@ -80,3 +94,13 @@ function inputExtender(){
     input.style.height = spanHeight + 'px';
 }
 
+//keydownアクション
+input.addEventListener('keydown',pressEnter);
+
+function pressEnter(e){
+    if(!e.isComposing && e.key === 'Enter'){
+        input.replaceWith(input.value);
+        input.value = '';
+        temporaly.textContent = input.value;
+    }
+}

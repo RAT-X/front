@@ -36,7 +36,7 @@
     font-size: 15px;
     width: var(--set-width);
     margin: 0;
-    padding: 0px;
+    padding: 3px 15px;
     box-sizing:border-box;
     overflow-wrap: break-word;
 }
@@ -50,6 +50,7 @@
 }
 textarea {
     resize: none;
+    margin: 0;
 }
 
 /* startEnd */
