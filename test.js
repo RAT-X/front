@@ -63,22 +63,25 @@ function afterCanvasExtender(){
 
 //最初のボックス設定
 const firstItemBox = allArea[1].querySelectorAll('.empty')[0];
-firstItemBox.className = 'itemBox connectIn isHere';
-// firstItemBox.className = 'itemBox startEnd strongBE isHere';
+firstItemBox.className = 'itemBox startEnd strongBE isHere';
 
 //最初の矢印の設定
 const firstBoxUnderCanvas = allArea[1].querySelectorAll('.arrow')[0];
 const firstAllWidth = firstBoxUnderCanvas.getBoundingClientRect().width;
-const halfWidth = firstAllWidth/1.35;
+const firstHalfWidth = firstAllWidth/1.35;
 const firstContext = firstBoxUnderCanvas.getContext('2d');
-firstContext.beginPath();
-firstContext.fillStyle = 'blue';
-firstContext.moveTo(halfWidth,0);
-firstContext.lineTo(halfWidth,150);
-firstContext.lineTo(halfWidth + 10 , 130);
-firstContext.moveTo(halfWidth,150);
-firstContext.lineTo(halfWidth - 10 , 130);
-firstContext.stroke();
+createDownArrow(firstContext,firstHalfWidth);
+
+function createDownArrow(xContext,width){
+    xContext.beginPath();
+    xContext.fillStyle = '#000';
+    xContext.moveTo(width,0);
+    xContext.lineTo(width,150);
+    xContext.lineTo(width + 10 , 130);
+    xContext.moveTo(width,150);
+    xContext.lineTo(width - 10 , 130);
+    xContext.stroke();
+}
 
 // 最初のボックスにinputタグを挿入
 const p = document.createElement('p');
@@ -101,9 +104,23 @@ input.addEventListener('keydown',pressEnter);
 
 function pressEnter(e){
     if(!e.isComposing && e.key === 'Enter'){
+        const isHere = document.getElementsByClassName('isHere')[0];
+        const strongs = ['strongBE','strongBr','strongPr','strongIn','strongLs','strongLe','strongDp'];
+        strongs.forEach((value)=>{isHere.classList.remove(value);});
+        isHere.classList.remove('isHere');
+
+        const div = document.createElement('div');
+        div.className = 'itemBox process strongPr isHere';
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'arrow';
+        canvas.style.height = '50px';
+
+        const baseParent = this.parentElement.parentElement.parentElement;
+        baseParent.appendChild(div);
+        baseParent.appendChild(canvas);
         input.replaceWith(input.value);
         input.value = '';
         temporaly.textContent = input.value;
-        const div = document.createElement('div');
     }
 }
