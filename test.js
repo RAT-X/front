@@ -63,7 +63,8 @@ function afterCanvasExtender(){
 
 //最初のボックス設定
 const firstItemBox = allArea[1].querySelectorAll('.empty')[0];
-firstItemBox.className = 'itemBox startEnd strongBE isHere';
+firstItemBox.className = 'itemBox display strongDp isHere';
+// firstItemBox.className = 'itemBox startEnd strongBE isHere';
 
 //最初の矢印の設定
 const firstBoxUnderCanvas = allArea[1].querySelectorAll('.arrow')[0];
@@ -80,7 +81,8 @@ firstContext.lineTo(halfWidth - 10 , 130);
 firstContext.stroke();
 
 // 最初のボックスにinputタグを挿入
-firstItemBox.appendChild(input);
+const p = document.createElement('p');
+firstItemBox.appendChild(p).appendChild(input);
 input.focus();
 
 // inputタグ幅の伸縮
@@ -102,5 +104,6 @@ function pressEnter(e){
         input.replaceWith(input.value);
         input.value = '';
         temporaly.textContent = input.value;
+        const div = document.createElement('div');
     }
 }
