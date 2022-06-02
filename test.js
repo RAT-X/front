@@ -63,7 +63,7 @@ function afterCanvasExtender(){
 
 //最初のボックス設定
 const firstItemBox = allArea[1].querySelectorAll('.empty')[0];
-firstItemBox.className = 'itemBox display strongDp isHere';
+firstItemBox.className = 'itemBox connectIn isHere';
 // firstItemBox.className = 'itemBox startEnd strongBE isHere';
 
 //最初の矢印の設定
