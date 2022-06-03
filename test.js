@@ -145,6 +145,59 @@ function pressEnter(e){
         //2行目以降右側のcanvasの生成
         for(let i = 1; i < 3; i++){
             baseParent.nextElementSibling.insertAdjacentHTML('beforeend','<canvas class="arrow">');
+        }//三項演算子だとバグが出る
+    }
+}
+
+//boxチェンジ
+class ShiftUD {
+    
+}
+input.addEventListener('keydown',addArrowCount);
+
+let arrowCount = 2;
+
+function addArrowCount(e){
+    const wantClasses = this.parentElement.parentElement;
+    const rejectClass = wantClasses.classList.contains('startEnd');
+    if(!rejectClass && e.shiftKey && e.key === 'ArrowUp'){
+        arrowCount += 1;
+        if(arrowCount === 9){
+            arrowCount = 0;
+        }
+    }
+}
+
+input.addEventListener('keydown',chengeBox);
+function chengeBox(e){
+    const wantClasses = this.parentElement.parentElement;
+    const rejectClass = wantClasses.classList.contains('startEnd');
+    if(!rejectClass && e.shiftKey && e.key === 'ArrowUp'){
+        switch(arrowCount){
+            case 1:
+                console.log('SE');
+                break;
+            case 2:
+                console.log('BR');
+                break;
+            case 3:
+                console.log('PR');
+                break;
+            case 4:
+                console.log('IN');
+                break;
+            case 5:
+                console.log('RS');
+                break;
+            case 6:
+                console.log('RE');
+                break;
+            case 7:
+                console.log('CO');
+                break;
+            case 8:
+                console.log('CI');
+                break;
         }
     }
 }
