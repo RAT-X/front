@@ -35,7 +35,7 @@ for(let i = 2; i < allArea.length; i++){
         const thisArrows = allArea[i].getElementsByClassName('arrow');
         const previousDivs = allArea[i-1].children;
         for(let n = 0; n < thisArrows.length; n++){
-            thisArrows[n].style.height = previousDivs[n].getBoundingClientRect().height + 6 + 'px';
+            thisArrows[n].style.height = previousDivs[n].getBoundingClientRect().height + 'px';
         }
     }
 }
@@ -71,7 +71,7 @@ const firstAllWidth = firstBoxUnderCanvas.getBoundingClientRect().width;
 const firstHalfWidth = firstAllWidth/1.35;
 const firstContext = firstBoxUnderCanvas.getContext('2d');
 createDownArrow(firstContext,firstHalfWidth);
-
+//↓生成
 function createDownArrow(xContext,width){
     xContext.beginPath();
     xContext.fillStyle = '#000';
@@ -135,5 +135,16 @@ function pressEnter(e){
         thisElement.appendChild(newP);
         newP.appendChild(input);
         input.focus();
+        //０行目のcanvasの生成
+        if(baseParent.classList.contains('area1')){
+            for(let i = 1; i < 3; i++){
+                allArea[0].insertAdjacentHTML('beforeend','<canvas class="arrow">');
+            }
+        };
+
+        //2行目以降右側のcanvasの生成
+        for(let i = 1; i < 3; i++){
+            baseParent.nextElementSibling.insertAdjacentHTML('beforeend','<canvas class="arrow">');
+        }
     }
 }
