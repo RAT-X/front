@@ -81,6 +81,7 @@ function createDownArrow(xContext,width){
     xContext.moveTo(width,150);
     xContext.lineTo(width - 10 , 130);
     xContext.stroke();
+    xContext.closePath();
 }
 
 // 最初のボックスにinputタグを挿入
@@ -116,11 +117,23 @@ function pressEnter(e){
         canvas.className = 'arrow';
         canvas.style.height = '50px';
 
+
         const baseParent = this.parentElement.parentElement.parentElement;
         baseParent.appendChild(div);
         baseParent.appendChild(canvas);
+
+        const thisElement = document.getElementsByClassName('isHere')[0];
+        const thisCanvas = thisElement.nextElementSibling;
+        const thisContext = thisCanvas.getContext('2d');
+        createDownArrow(thisContext,firstHalfWidth);
+
         input.replaceWith(input.value);
         input.value = '';
         temporaly.textContent = input.value;
+
+        const newP = document.createElement('p');
+        thisElement.appendChild(newP);
+        newP.appendChild(input);
+        input.focus();
     }
 }
